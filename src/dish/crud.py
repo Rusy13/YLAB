@@ -27,6 +27,7 @@ async def create_dish(db: AsyncSession, dish: schemas.DishCreate, submenu_id: UU
 
         await db.commit()
         return created_dish
+        # return JSONResponse(content=created_dish, status_code=201)
     except Exception as e:
         print(f"Error creating dish: {e}")
         await db.rollback()
@@ -46,8 +47,11 @@ async def get_dishes(db: AsyncSession, submenu_id: schemas.UUID):
         return []
 
     # Return dishes as a list of dictionaries
-    dishes_with_schema = [{"id": str(dish.id), "title": dish.title, "description": dish.description, "submenu_id": str(dish.submenu_id)} for dish in dishes]
+    dishes_with_schema = [{"id": str(dish.id), "title": dish.title, "description": dish.description, "price": str(dish.price), "submenu_id": str(dish.submenu_id)} for dish in dishes]
     return dishes_with_schema
+
+
+
 
 
 async def get_dish(db: AsyncSession, dish_id: UUID):
@@ -64,7 +68,7 @@ async def get_dish(db: AsyncSession, dish_id: UUID):
         }
         return dish_dict
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Dish not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="dish not found")
 
 
 async def update_dish(db: AsyncSession, dish_id: schemas.UUID, dish: schemas.DishCreate):

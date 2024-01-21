@@ -14,6 +14,7 @@ class MenuCreate(MenuBase):
 class Menu(MenuBase):
     id: UUID
     title: str  # Добавить атрибут name
+    description: str
     submenus: List[SubMenu] = []
     dishes_count: int
     submenus_count: int

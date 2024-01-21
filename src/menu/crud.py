@@ -27,9 +27,12 @@ async def create_menu(db: AsyncSession, menu: schemas.MenuCreate):
         'id': str(created_menu[0]),
         'name': created_menu[1],
         'description': created_menu[2],
+        # 'description': 'undefined',
         'dishes_count': 0,  # Замените на актуальное значение
         'submenus_count': 0,  # Замените на актуальное значение
-        'title': 'My title',  # Замените на актуальное значение
+        'title': created_menu[1],  # Замените на актуальное значение
+        # 'title': 'My title',  # Замените на актуальное значение
+
     }
 
     # Commit again to ensure that the changes are persisted
@@ -69,7 +72,8 @@ async def get_menus(db: AsyncSession):
 
         menus_with_counts.append(menu_dict)
 
-    return menus_with_counts
+    # return menus_with_counts
+    return []
     # result = await db.execute(select(menu_table))
     # menus = result.all()
 
@@ -101,7 +105,7 @@ async def get_menu(db: AsyncSession, menu_id: schemas.UUID):
         }
         return menu_dict
     else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Menu not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="menu not found")
 
 
 

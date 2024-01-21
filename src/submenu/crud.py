@@ -30,8 +30,8 @@ async def create_submenu(db: AsyncSession, submenu: schemas.SubMenuCreate, menu_
     created_submenu = result.fetchone()
 
     await db.commit()
-    # return created_submenu
-    return JSONResponse(content = 'Success', status_code=201)
+    return created_submenu
+    # return JSONResponse(content = 'Success', status_code=201)
 
 
 
@@ -62,41 +62,28 @@ async def get_submenus(db: AsyncSession, menu_id: schemas.UUID):
 
 
 
-
-
 async def get_submenu(db: AsyncSession, submenu_id: schemas.UUID):
     print(f"Trying to fetch submenu with ID: {submenu_id}")
     result = await db.execute(select(models.submenu_table).where(models.submenu_table.c.id == submenu_id))
     submenu = result.fetchone()
-    # submenus_count = await db.execute(select(func.count()).where(submenu_table.c.submenu_id == submenu_id))
-    # submenus_count = submenus_count.scalar()
 
-    # dishes_count = await db.execute(
-    #     select(func.count())
-    #     .where(dish_table.c.submenu_id.in_(select(submenu_table.c.id).where(submenu_table.c.submenu_id == submenu_id)))
-    # )
-    # dishes_count = dishes_count.scalar()
-
-
-    dishes_count = await db.execute(
-        select(func.count()).where(dish_table.c.submenu_id == submenu.id))
-    dishes_count = dishes_count.scalar()
-
-
-    if submenu:
-        submenu_dict = {
-            "id": str(submenu.id),
-            "title": submenu.title,
-            "description": submenu.description,
-            "menu_id": str(submenu.menu_id),
-            "dishes_count": dishes_count,  # Добавление dishes_count к результату
-            # "submenus_count": submenus_count,
-            "dishes": []
-        }
-        return submenu_dict
-    else:
+    if not submenu:
         print(f"Submenu with ID {submenu_id} not found")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="submenu not found")
+
+    dishes_count = await db.execute(select(func.count()).where(dish_table.c.submenu_id == submenu.id))
+    dishes_count = dishes_count.scalar()
+
+    submenu_dict = {
+        "id": str(submenu.id),
+        "title": submenu.title,
+        "description": submenu.description,
+        "menu_id": str(submenu.menu_id),
+        "dishes_count": dishes_count,
+        "dishes": []
+    }
+
+    return submenu_dict
 
 
 
