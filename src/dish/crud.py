@@ -16,11 +16,12 @@ from fastapi.responses import JSONResponse
 
 async def create_dish(db: AsyncSession, dish: schemas.DishCreate, submenu_id: UUID):
     try:
+        rounded_price = str(round(float(dish.price), 2))
         # Exclude "id" and "submenu_id" from the dish data
-        dish_data = dish.dict(exclude={"id", "submenu_id"})
+        dish_data = dish.dict(exclude={"id", "submenu_id", "price"})
 
         # Use the returning clause to get the values of the inserted row
-        db_dish = models.dish_table.insert().returning(models.dish_table).values(submenu_id=submenu_id, **dish_data)
+        db_dish = models.dish_table.insert().returning(models.dish_table).values(submenu_id=submenu_id,  price=rounded_price, **dish_data)
 
         result = await db.execute(db_dish)
         created_dish = result.fetchone()
@@ -72,8 +73,9 @@ async def get_dish(db: AsyncSession, dish_id: UUID):
 
 
 async def update_dish(db: AsyncSession, dish_id: schemas.UUID, dish: schemas.DishCreate):
+    rounded_price = str(round(float(dish.price), 2))
     await db.execute(
-        dish_table.update().where(dish_table.c.id == dish_id).values(title=dish.title, price=dish.price, description = dish.description)
+        dish_table.update().where(dish_table.c.id == dish_id).values(title=dish.title, price=rounded_price, description = dish.description)
     )
     await db.commit()
     result = await db.execute(select(dish_table).where(dish_table.c.id == dish_id))
@@ -83,7 +85,7 @@ async def update_dish(db: AsyncSession, dish_id: schemas.UUID, dish: schemas.Dis
             "id": str(dish.id),
             "title": dish.title,
             "description": dish.description,
-            "price": dish.price,
+            "price": rounded_price,
             # "submenus_count": submenus_count,
             # "dishes_count": dishes_count
         }
