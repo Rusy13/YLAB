@@ -1,19 +1,21 @@
-# menu/schemas.py
 from pydantic import BaseModel
 from typing import List, Optional
 from uuid import UUID
-from src.submenu.schemas import SubMenu  # Импорт SubMenu из правильного пути
+from src.submenu.schemas import SubMenu  
+
 
 class MenuBase(BaseModel):
     pass
+
 
 class MenuCreate(MenuBase):
     title: str
     description: str
 
+
 class Menu(MenuBase):
     id: UUID
-    title: Optional[str]  # Добавить атрибут name
+    title: Optional[str] 
     description: Optional[str]
     submenus: List[SubMenu] = []
     dishes_count: int
@@ -22,11 +24,7 @@ class Menu(MenuBase):
         orm_mode = True
 
 
-
 class MenuOutput(MenuBase):
     id: UUID
-    title: str  # Добавить атрибут name
+    title: str 
     description: Optional[str]
-    # submenus: List[SubMenu] = []
-    # dishes_count: int
-    # submenus_count: int
