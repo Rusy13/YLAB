@@ -73,10 +73,27 @@ async def get_dish(db: AsyncSession, dish_id: UUID):
 
 async def update_dish(db: AsyncSession, dish_id: schemas.UUID, dish: schemas.DishCreate):
     await db.execute(
-        dish_table.update().where(dish_table.c.id == dish_id).values(title=dish.title, price=dish.price)
+        dish_table.update().where(dish_table.c.id == dish_id).values(title=dish.title, price=dish.price, description = dish.description)
     )
     await db.commit()
-    return await get_dish(db, dish_id)
+    result = await db.execute(select(dish_table).where(dish_table.c.id == dish_id))
+    dish = result.fetchone()
+    if dish:
+        dish_dict = {
+            "id": str(dish.id),
+            "title": dish.title,
+            "description": dish.description,
+            "price": dish.price,
+            # "submenus_count": submenus_count,
+            # "dishes_count": dishes_count
+        }
+        return dish_dict
+    # return await get_menu(db, menu_id)
+    # return await menu_dict
+
+
+    # return await get_dish(db, dish_id)
+    return dish_dict
 
 
 

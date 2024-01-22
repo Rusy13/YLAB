@@ -31,7 +31,8 @@ async def create_submenu(db: AsyncSession, submenu: schemas.SubMenuCreate, menu_
 
     await db.commit()
     return created_submenu
-    # return JSONResponse(content = 'Success', status_code=201)
+    # return JSONResponse(content = created_submenu, status_code=201)
+    # return JSONResponse(content={"message": "Submenu created successfully"}, status_code=201)
 
 
 
@@ -55,7 +56,9 @@ async def get_submenus(db: AsyncSession, menu_id: schemas.UUID):
     # Возвращаем кортежи с нужными значениями
     submenus_with_schema = [(str(submenu.id), submenu.title, str(submenu.menu_id)) for submenu in submenus]
 
+    # return JSONResponse(content=submenus_with_schema)
     return JSONResponse(content=submenus_with_schema)
+
 
 
 
@@ -78,6 +81,7 @@ async def get_submenu(db: AsyncSession, submenu_id: schemas.UUID):
         "id": str(submenu.id),
         "title": submenu.title,
         "description": submenu.description,
+        # "description": None if submenu.description is None else str(submenu.description),
         "menu_id": str(submenu.menu_id),
         "dishes_count": dishes_count,
         "dishes": []
@@ -92,10 +96,32 @@ async def get_submenu(db: AsyncSession, submenu_id: schemas.UUID):
 # Ваши импорты
 async def update_submenu(db: AsyncSession, submenu_id: schemas.UUID, submenu: schemas.SubMenuCreate):
     await db.execute(
-        submenu_table.update().where(submenu_table.c.id == submenu_id).values(title=submenu.title)
+        submenu_table.update().where(submenu_table.c.id == submenu_id).values(title=submenu.title, description = submenu.description)
     )
     await db.commit()
-    return await get_submenu(db, submenu_id)
+    result = await db.execute(select(submenu_table).where(submenu_table.c.id == submenu_id))
+    submenu = result.fetchone()
+    if submenu:
+        submenu_dict = {
+            "id": str(submenu.id),
+            "title": submenu.title,
+            "description": submenu.description,
+            # "submenus_count": submenus_count,
+            # "dishes_count": dishes_count
+        }
+        return submenu_dict
+    # return await get_menu(db, menu_id)
+    # return await menu_dict
+
+
+
+
+
+
+
+
+
+
 
 async def get_dishes_by_submenu_id(db: AsyncSession, submenu_id: schemas.UUID):
     statement = select(dish_table).where(dish_table.c.submenu_id == submenu_id)
@@ -120,3 +146,6 @@ async def delete_submenu(db: AsyncSession, menu_id: schemas.UUID, submenu_id: sc
         return db_submenu  # Возвращаем удаленный объект
     else:
         return None  # Возвращаем None, если подменю не найдено
+    
+
+    

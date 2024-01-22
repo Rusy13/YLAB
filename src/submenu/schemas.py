@@ -13,10 +13,13 @@ class SubMenuCreate(SubMenuBase):
 class SubMenu(SubMenuBase):
     id: UUID
     title: str  # Добавить атрибут name
+    # description: str
+    description: Optional[str]
     menu_id: UUID
     dishes: List[Dish] = []  # Использование Dish напрямую
     dishes_count: int = 0
     # submenus_count: int
+    # description: str
 
     class Config:
         orm_mode = True
@@ -25,3 +28,21 @@ class SubMenu(SubMenuBase):
         from_orm = True
         from_attributes = True
 
+    # submenu_dict = {
+    #     "id": str(submenu.id),
+    #     "title": submenu.title,
+    #     "description": submenu.description,
+    #     "menu_id": str(submenu.menu_id),
+    #     "dishes_count": dishes_count,
+    #     "dishes": []
+    # }
+
+
+
+class SubMenuOutput(SubMenuBase):
+    id: UUID
+    title: str  # Добавить атрибут name
+    description: str
+    # submenus: List[SubMenu] = []
+    # dishes_count: int
+    # submenus_count: int

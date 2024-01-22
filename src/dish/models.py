@@ -17,6 +17,6 @@ dish_table = Table(
     Column("id", UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True, nullable=False),
     Column("title", String, index=True),
     Column("description", String),
-    Column("price", Integer),
+    Column("price", String),
     Column("submenu_id", UUID(as_uuid=True), ForeignKey(submenu_table.c.id)),  # исправлено на использование submenu_table
 )

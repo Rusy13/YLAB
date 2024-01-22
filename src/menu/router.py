@@ -18,7 +18,7 @@ async def read_menus(db: AsyncSession = Depends(get_async_session)):
 async def read_menu(menu_id: schemas.UUID, db: AsyncSession = Depends(get_async_session)):
     return await crud.get_menu(db, menu_id)
 
-@menu_router.patch("/{menu_id}", response_model=schemas.Menu)
+@menu_router.patch("/{menu_id}", response_model=schemas.MenuOutput)
 async def update_menu(menu_id: schemas.UUID, menu: schemas.MenuCreate, db: AsyncSession = Depends(get_async_session)):
     return await crud.update_menu(db, menu_id, menu)
 

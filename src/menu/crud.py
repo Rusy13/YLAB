@@ -10,7 +10,7 @@ from src.submenu.crud import delete_submenu
 from src.submenu.models import submenu_table
 from src.dish.models import dish_table
 from . import models, schemas
-from fastapi import HTTPException, status
+from fastapi import HTTPException, Response, status
 
 
 async def create_menu(db: AsyncSession, menu: schemas.MenuCreate):
@@ -72,12 +72,13 @@ async def get_menus(db: AsyncSession):
 
         menus_with_counts.append(menu_dict)
 
-    # return menus_with_counts
-    return []
+    return menus_with_counts
+    # return []
+    # return Response(status='OK')   
     # result = await db.execute(select(menu_table))
     # menus = result.all()
 
-    # return menus
+    # return menus_with_counts
 
 
 
@@ -100,6 +101,8 @@ async def get_menu(db: AsyncSession, menu_id: schemas.UUID):
             "id": str(menu.id),
             "title": menu.title,
             "description": menu.description,
+            # "title": None,
+            # "description": None,
             "submenus_count": submenus_count,
             "dishes_count": dishes_count
         }
@@ -114,10 +117,23 @@ async def get_menu(db: AsyncSession, menu_id: schemas.UUID):
 
 async def update_menu(db: AsyncSession, menu_id: schemas.UUID, menu: schemas.MenuCreate):
     await db.execute(
-        menu_table.update().where(menu_table.c.id == menu_id).values(title=menu.title)
+        menu_table.update().where(menu_table.c.id == menu_id).values(title=menu.title, description = menu.description)
     )
     await db.commit()
-    return await get_menu(db, menu_id)
+    result = await db.execute(select(menu_table).where(menu_table.c.id == menu_id))
+    menu = result.fetchone()
+    if menu:
+        menu_dict2 = {
+            "id": str(menu.id),
+            "title":menu.title,
+            "description":  menu.description,
+            # "submenus_count": submenus_count,
+            # "dishes_count": dishes_count
+        }
+        return menu_dict2
+    # return await get_menu(db, menu_id)
+    # return await menu_dict
+
 
 
 
