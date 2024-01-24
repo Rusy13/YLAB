@@ -29,3 +29,6 @@
    uvicorn src.main:app --reload
 
 10. Документация доступна по адресу <http://127.0.0.1:8000/docs>
+
+Для build: docker compose build
+Для поднятия: docker compose up
