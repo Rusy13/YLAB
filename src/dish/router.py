@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from . import crud, schemas
 from src.database import get_async_session
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import List
 
 
 dish_router = APIRouter()

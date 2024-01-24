@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from . import crud, schemas
 from src.database import get_async_session
+from typing import List
 
 
 menu_router = APIRouter()
@@ -12,7 +13,7 @@ async def create_menu(menu: schemas.MenuCreate, db: AsyncSession = Depends(get_a
     return await crud.create_menu(db, menu)
 
 
-@menu_router.get("/", response_model=list[schemas.Menu])
+@menu_router.get("/", response_model=List[schemas.Menu])
 async def read_menus(db: AsyncSession = Depends(get_async_session)):
     return await crud.get_menus(db)
 

@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from . import crud, schemas
 from src.database import get_async_session
 from sqlalchemy.ext.asyncio import AsyncSession
+from typing import List
 
 
 submenu_router = APIRouter()
@@ -13,7 +14,7 @@ async def create_submenu(menu_id: schemas.UUID, submenu: schemas.SubMenuCreate, 
     return await crud.create_submenu(db, submenu, menu_id)
 
 
-@submenu_router.get("/{menu_id}/submenus", response_model=list[schemas.SubMenu])
+@submenu_router.get("/{menu_id}/submenus", response_model=List[schemas.SubMenu])
 async def read_submenus(menu_id: schemas.UUID, db: Session = Depends(get_async_session)):
     return await crud.get_submenus(db, menu_id)
 
