@@ -2,10 +2,9 @@ import uuid
 from sqlalchemy import Table, Column, MetaData, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from src.database import Base
+from src.database import Base, metadata
 
-
-metadata = MetaData()
+# metadata = MetaData()
 
 
 menu_table = Table(

@@ -9,9 +9,14 @@ import sys
 sys.path.append(os.path.join(sys.path[0], 'src'))
 
 from src.config import DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_PASS
-from src.menu.models import metadata as metadata_menu
-from src.submenu.models import metadata as metadata_submenu
-from src.dish.models import metadata as metadata_dish
+# from src.menu.models import metadata as metadata_menu
+# from src.submenu.models import metadata as metadata_submenu
+# from src.dish.models import metadata as metadata_dish
+from src.menu.models import *
+from src.submenu.models import *
+from src.dish.models import *
+
+from src.database import metadata
 
 config = context.config
 
@@ -26,7 +31,8 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 
-target_metadata = [metadata_menu, metadata_submenu, metadata_dish]
+# target_metadata = [metadata_menu, metadata_submenu, metadata_dish]
+target_metadata = metadata
 
 depends_on = [
     ('menus', None),

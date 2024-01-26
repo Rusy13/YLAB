@@ -3,10 +3,10 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base, relationship
 import uuid
 from src.submenu.models import submenu_table
-from src.database import Base
+from src.database import Base, metadata
 
 
-metadata = MetaData()
+# metadata = MetaData()
 
 
 dish_table = Table(

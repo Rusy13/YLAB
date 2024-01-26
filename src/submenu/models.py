@@ -2,11 +2,11 @@ from sqlalchemy import Table, Column, Integer, MetaData, String, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_base, relationship
 import uuid
-from src.database import Base
+from src.database import Base, metadata
 from src.menu.models import menu_table
 
 
-metadata = MetaData()
+# metadata = MetaData()
 
 
 submenu_table = Table(
