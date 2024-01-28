@@ -9,6 +9,18 @@ services:
     env_file:
       - .env-non-dev
 
+
+
+  test_db:
+    image: postgres:15
+    container_name: test_db_app
+    environment:
+      POSTGRES_DB: YlabHW1Test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1111
+
+
+      
   # redis:
   #   image: redis:7
   #   container_name: redis_app
@@ -28,26 +40,3 @@ services:
     depends_on:
       - db
   #     - redis
-
-  # celery:
-  #   build:
-  #     context: .
-  #   env_file:
-  #     - .env-non-dev
-  #   container_name: celery_app
-  #   command: ["/fastapi_app/docker/celery.sh", "celery"]
-  #   depends_on:
-  #     - redis
-
-  # flower:
-  #   build:
-  #     context: .
-  #   env_file:
-  #     - .env-non-dev
-  #   container_name: flower_app
-  #   command: ["/fastapi_app/docker/celery.sh", "flower"]
-  #   depends_on:
-  #     - redis
-  #     - celery
-  #   ports:
-  #     - 8888:5555
