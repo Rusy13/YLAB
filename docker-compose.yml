@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.10"
 services:
   db:
     image: postgres:15
@@ -20,14 +20,6 @@ services:
       POSTGRES_PASSWORD: 1111
 
 
-      
-  # redis:
-  #   image: redis:7
-  #   container_name: redis_app
-  #   command: --port 5370
-  #   expose:
-  #     - 5370
-
   app:
     build:
       context: .
@@ -39,4 +31,3 @@ services:
       - 9999:8000
     depends_on:
       - db
-  #     - redis

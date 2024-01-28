@@ -32,3 +32,17 @@
 
 Для build: docker compose build
 Для поднятия: docker compose up
+
+
+
+HW2:
+1. Поднимаем docker в фоновом режиме: docker-compose up -d
+
+2. Входим в консоль: docker exec -it fastapi_app /bin/bash
+
+3. Прогоняем тесты:
+pytest -v -s tests/test_menu.py
+pytest -v -s tests/test_submenu.py
+pytest -v -s tests/test_dish.py
+
+4. Документация доступна по адресу: http://localhost:9999/docs
