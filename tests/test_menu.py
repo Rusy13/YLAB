@@ -9,28 +9,12 @@ from typing import Any
 from httpx import AsyncClient
 
 
-
-
-
-
-
-
-
 async def test_all_menu_empty(ac: AsyncClient):
     """Проверка получения пустого списка меню."""
     response = await ac.get("/api/v1/menus")
     assert response.status_code == 200, "Статус ответа не 200"
     data = response.json()
     assert data == [], "Тело ответа не пустое"
-
-
-
-
-
-
-
-
-
 
 
 async def test_post_menu(ac: AsyncClient):
@@ -53,40 +37,12 @@ async def test_post_menu(ac: AsyncClient):
         'Описание меню не соответствует ожидаемому'
 
 
-
-
-
-
-
-
-
 async def test_all_menu_not_empty(ac: AsyncClient):
     """Проверка получения непустого списка меню."""
     response = await ac.get("/api/v1/menus")
     assert response.status_code == HTTPStatus.OK, \
         'Статус ответа не 200'
     assert response.json() != [], 'В ответе пустой список'
-
-
-
-
-
-
-
-# def test_register():
-#     assert 1==1
-# def test_a():
-#     assert 1==1
-# def test_b():
-#     assert 1==2
- 
-
-
-
-
-
-
-
 
 
 async def test_patch_menu(ac: AsyncClient):
@@ -111,18 +67,6 @@ async def test_patch_menu(ac: AsyncClient):
         'Описание меню не соответствует ожидаемому'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 async def test_get_patched_menu(ac: AsyncClient):
     async with async_session_maker() as session:
         query = select(menu_table)
@@ -144,14 +88,6 @@ async def test_get_patched_menu(ac: AsyncClient):
         'Количество блюд не соответствует ожидаемому'
 
 
-
-
-
-
-
-
-
-
 async def test_delete_added_menu(ac: AsyncClient, added_menu_data):
     menu_id = added_menu_data[0]
     async with async_session_maker() as session:
@@ -166,16 +102,6 @@ async def test_delete_added_menu(ac: AsyncClient, added_menu_data):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == res[0][2], \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
-
-
-
-
-
-
 
 
 async def test_get_deleted_menu(ac: AsyncClient, added_menu_data):

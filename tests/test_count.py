@@ -12,14 +12,6 @@ from typing import Any
 from httpx import AsyncClient
 
 
-
-
-
-
-
-
-
-
 async def test_post_menu1(ac: AsyncClient):
     """Добавление нового меню."""
     response = await ac.post("/api/v1/menus", json={
@@ -38,10 +30,6 @@ async def test_post_menu1(ac: AsyncClient):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == "My menu description 1", \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
 
 
 async def test_post_submenu1(ac: AsyncClient):
@@ -64,15 +52,6 @@ async def test_post_submenu1(ac: AsyncClient):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == "My submenu description 1", \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
-
-
-
-
-
 
 
 async def test_post_dish1(ac: AsyncClient):
@@ -102,10 +81,6 @@ async def test_post_dish1(ac: AsyncClient):
     assert response.json()['price'] == "13.5", \
         'Описание цены не соответствует ожидаемому'
     
-
-
-
-
 
 async def test_post_dish2(ac: AsyncClient):
     async with async_session_maker() as session:

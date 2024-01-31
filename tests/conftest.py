@@ -69,7 +69,6 @@ async def added_menu_data(ac: AsyncClient):
     return menu_data
 
 
-# Фикстура для сохранения данных о добавленном меню
 @pytest.fixture(scope="module")
 async def added_submenu_data(ac: AsyncClient):
     async with async_session_maker() as session:
@@ -82,7 +81,6 @@ async def added_submenu_data(ac: AsyncClient):
     return submenu_data
 
 
-# Фикстура для сохранения данных о добавленном меню
 @pytest.fixture(scope="module")
 async def added_dish_data(ac: AsyncClient):
     async with async_session_maker() as session:

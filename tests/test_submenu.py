@@ -9,11 +9,6 @@ from typing import Any
 from httpx import AsyncClient
 
 
-
-
-
-
-
 async def test_post_menu(ac: AsyncClient):
     """Добавление нового меню."""
     response = await ac.post("/api/v1/menus", json={
@@ -32,17 +27,6 @@ async def test_post_menu(ac: AsyncClient):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == "My submenu description 1", \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
-
-
-
-
-
-
-
 
 
 async def test_post_submenu(ac: AsyncClient):
@@ -67,25 +51,6 @@ async def test_post_submenu(ac: AsyncClient):
         'Описание меню не соответствует ожидаемому'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 async def test_get_submenu(ac: AsyncClient):
     async with async_session_maker() as session:
         query = select(submenu_table)
@@ -106,9 +71,6 @@ async def test_get_submenu(ac: AsyncClient):
         'id_menu ошибочно'
     assert response.json()[0][2] == str(res[0][3]), \
         'id_submenu ошибочно'
-
-
-
 
 
 async def test_get_submenu_one(ac: AsyncClient):
@@ -135,12 +97,6 @@ async def test_get_submenu_one(ac: AsyncClient):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == "My submenu description 1", \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
-
-
 
 
 async def test_patch_menu(ac: AsyncClient):
@@ -173,32 +129,6 @@ async def test_patch_menu(ac: AsyncClient):
         'Описание меню не соответствует ожидаемому'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 async def test_get_submenu_one_update(ac: AsyncClient):
     async with async_session_maker() as session:
         query = select(submenu_table)
@@ -225,12 +155,6 @@ async def test_get_submenu_one_update(ac: AsyncClient):
         'Описание меню не соответствует ожидаемому'
     
 
-
-
-
-
-
-
 async def test_delete_added_menu(ac: AsyncClient, added_submenu_data):
     submenu_id = str(added_submenu_data[0])
     menu_id = str(added_submenu_data[1])
@@ -249,16 +173,6 @@ async def test_delete_added_menu(ac: AsyncClient, added_submenu_data):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == 'My updated submenu description 1', \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
-
-
-
-
-
-
 
 
 async def test_get_deleted_menu(ac: AsyncClient, added_submenu_data):

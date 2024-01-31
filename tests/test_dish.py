@@ -11,14 +11,6 @@ from typing import Any
 from httpx import AsyncClient
 
 
-
-
-
-
-
-
-
-
 async def test_post_menu(ac: AsyncClient):
     """Добавление нового меню."""
     response = await ac.post("/api/v1/menus", json={
@@ -37,10 +29,6 @@ async def test_post_menu(ac: AsyncClient):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == "My submenu description 1", \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
 
 
 async def test_post_submenu(ac: AsyncClient):
@@ -63,15 +51,6 @@ async def test_post_submenu(ac: AsyncClient):
         'Название меню не соответствует ожидаемому'
     assert response.json()['description'] == "My submenu description 1", \
         'Описание меню не соответствует ожидаемому'
-
-
-
-
-
-
-
-
-
 
 
 async def test_post_dish(ac: AsyncClient):
@@ -100,12 +79,8 @@ async def test_post_dish(ac: AsyncClient):
         'Описание меню не соответствует ожидаемому'
     assert response.json()['price'] == "12.5", \
         'Описание цены не соответствует ожидаемому'
-    
 
 
-
-
-        
 async def test_get_dish(ac: AsyncClient, added_submenu_data):
     submenu_id = str(added_submenu_data[0])
     menu_id = str(added_submenu_data[1])
@@ -129,14 +104,6 @@ async def test_get_dish(ac: AsyncClient, added_submenu_data):
         'dish не сходится'
     
 
-
-
-
-
-
-
-
-
 async def test_get_dish2(ac: AsyncClient, added_submenu_data):
     submenu_id = str(added_submenu_data[0])
     menu_id = str(added_submenu_data[1])
@@ -157,11 +124,6 @@ async def test_get_dish2(ac: AsyncClient, added_submenu_data):
     }, \
         'dish не сходится 2'
     
-
-
-
-
-
 
 async def test_upd_dish2(ac: AsyncClient, added_submenu_data):
     submenu_id = str(added_submenu_data[0])
@@ -193,13 +155,6 @@ async def test_upd_dish2(ac: AsyncClient, added_submenu_data):
         'upd не проходит'
     
 
-
-
-
-
-
-
-
 async def test_get_dish3(ac: AsyncClient, added_submenu_data):
     submenu_id = str(added_submenu_data[0])
     menu_id = str(added_submenu_data[1])
@@ -220,19 +175,6 @@ async def test_get_dish3(ac: AsyncClient, added_submenu_data):
     }, \
         'dish не сходится 3'
     
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 async def test_delete_added_dish(ac: AsyncClient, added_dish_data, added_submenu_data):
     dish_id = str(added_dish_data[0])
@@ -256,16 +198,6 @@ async def test_delete_added_dish(ac: AsyncClient, added_dish_data, added_submenu
         'Описание dish не соответствует ожидаемому'
     assert response.json()['price'] == '14.5', \
         'Цена dish не соответствует ожидаемому'
-
-
-
-
-
-
-
-
-
-
 
 
 async def test_get_deleted_dish(ac: AsyncClient, added_submenu_data, added_dish_data):
