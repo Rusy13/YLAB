@@ -62,11 +62,13 @@ async def count_submenus_and_dishes():
         # Выполняем запрос
         result = await session.execute(query)
         rows = result.fetchall()
-
+        if not rows:
+            print("Нет данных в базе.")
+        else:
         # Выводим результаты
-        for row in rows:
-            menu_id, menu_title, submenu_count, dish_count = row
-            print(f"Menu ID: {menu_id}, Name: {menu_title}, Submenu Count: {submenu_count}, Dish Count: {dish_count}")
+            for row in rows:
+                menu_id, menu_title, submenu_count, dish_count = row
+                print(f"Menu ID: {menu_id}, Name: {menu_title}, Submenu Count: {submenu_count}, Dish Count: {dish_count}")
 
 # Пример использования
 async def main():
