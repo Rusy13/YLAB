@@ -52,3 +52,4 @@ pytest -v -s tests/test_count.py
 4. Документация доступна по адресу: http://localhost:9999/docs
 
 5. В src/scripts/query.py лежит запрос для вывода количества подменю и блюд для меню.
+Для прогона: python src/sripts/query.py
