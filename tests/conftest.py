@@ -57,10 +57,6 @@ async def ac() -> AsyncGenerator[AsyncClient, None]:
         yield ac
 
 
-
-
-import pytest
-
 # Фикстура для сохранения данных о добавленном меню
 @pytest.fixture(scope="module")
 async def added_menu_data(ac: AsyncClient):
@@ -72,11 +68,6 @@ async def added_menu_data(ac: AsyncClient):
         menu_data.append(res[0][0])
     return menu_data
 
-
-
-
-
-import pytest
 
 # Фикстура для сохранения данных о добавленном меню
 @pytest.fixture(scope="module")
@@ -90,12 +81,6 @@ async def added_submenu_data(ac: AsyncClient):
         submenu_data.append(res[0][3])
     return submenu_data
 
-
-
-
-
-
-import pytest
 
 # Фикстура для сохранения данных о добавленном меню
 @pytest.fixture(scope="module")

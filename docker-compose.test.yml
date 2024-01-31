@@ -1,0 +1,36 @@
+
+
+version: "3.10"
+services:
+  db:
+    image: postgres:15
+    container_name: db_app
+    command: -p 1221
+    expose:
+      - 1221
+    env_file:
+      - .env-non-dev
+
+
+
+  test_db:
+    image: postgres:15
+    container_name: test_db_app
+    environment:
+      POSTGRES_DB: ${DBT_NAME}
+      POSTGRES_USER: ${DBT_USER}
+      POSTGRES_PASSWORD: ${DBT_PASS}
+
+
+  app:
+    build:
+      context: .
+    env_file:
+      - .env-non-dev
+    container_name: fastapi_app
+    command: ["/fastapi_app/docker/app.sh"]
+    ports:
+      - 9999:8000
+    depends_on:
+      # - db
+      - test_db
