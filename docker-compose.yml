@@ -8,6 +8,11 @@ services:
       - 1221
     env_file:
       - .env-non-dev
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
 
 
 
@@ -15,9 +20,14 @@ services:
     image: postgres:15
     container_name: test_db_app
     environment:
-      POSTGRES_DB: YlabHW1Test
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1111
+      POSTGRES_DB: ${DBT_NAME}
+      POSTGRES_USER: ${DBT_USER}
+      POSTGRES_PASSWORD: ${DBT_PASS}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-U", "${DBT_USER}", "-d", "${DBT_NAME}"]
+      interval: 10s
+      timeout: 30s
+      retries: 5
 
 
   app:
