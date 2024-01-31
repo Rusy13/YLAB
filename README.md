@@ -36,7 +36,10 @@
 
 
 HW2:
-1. Поднимаем docker в фоновом режиме: docker-compose up -d
+
+1. Для build тестов: docker-compose -f docker-compose.test.yml build
+
+1. Поднимаем docker в фоновом режиме: docker-compose -f docker-compose.test.yml up -d
 
 2. Входим в консоль: docker exec -it fastapi_app /bin/bash
 
@@ -44,5 +47,8 @@ HW2:
 pytest -v -s tests/test_menu.py
 pytest -v -s tests/test_submenu.py
 pytest -v -s tests/test_dish.py
+pytest -v -s tests/test_count.py
 
 4. Документация доступна по адресу: http://localhost:9999/docs
+
+5. В src/scripts/query.py лежит запрос для вывода количества подменю и блюд для меню.
